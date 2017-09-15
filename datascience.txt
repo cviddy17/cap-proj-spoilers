@@ -1,0 +1,131 @@
+
+
+1. I have two 6-sided dice. One is a standard die with the numbers 1-6. The other has three 3's and three 6's. You grab one at random and roll a six. What is the probability that you chose the fair die?
+
+Pr(Die 1 is 6) = 1/6
+Pr(Die 2 is 6) = 1/2
+Pr(Fair Die) = 1/2
+
+Pr(Fair Die|6) = P(6|Fair)P(Fair)/
+                 P(6|Fair)P(Fair)+ P(6|Not Fair)P(Not Fair)
+
+                 =(1/6)(1/2)/                 = (1/12)/(1/12+6/12)
+                  (1/6)(1/2)+(1/2)(1/2)
+
+->-> float(1/7) <- <-
+
+2. You have a site which receives on average 2 users every minute. There is a serious bug which requires you to take down the site for 5 minutes.
+
+a. How many users are expected to be affected by the downtime (attempt to visit the site in 5 minutes)?
+E(Downtime) = Lambda 2 * 5 Minutes = 10 Users
+
+b. What is the probability that no user would be affected by the downtime?
+What model are you using to model your data?
+P(X = 0) = 2^0(exp -2)/0! = exp -2 ^ 5  ~= .135335283236613 ^ 5 = .000045399 ~=
+.0045%
+
+
+
+You are given the following data of student marks in a 5-by-5 matrix.
+
+id	Assignment 1 score	Assignment 2 score	Total score	Score percentage
+1	12	19	31	0.62
+2	20	21	41	0.82
+3	15	22	37	0.74
+4	14	9	23	0.46
+5	25	25	50	1.00
+a. Use the column names (not the data values) to make a guess of the rank of the matrix. Explain your guess.
+
+Rank = 3 (4 and 5 are dependent on 1 & 2)
+
+b. Use one of the analytical techniques or algorithms we've learned to verify your guess. For your convenience, here's the data in csv format:
+
+1,12,19,31,0.62
+2,20,21,41,0.82
+3,15,22,37,0.74
+4,14,9,23,0.46
+5,25,25,50,1.00
+
+Um... C3 = C1+C2, C4 = C3*.2 = .2*(C1+C2), thus drop 2 dimensions, therefore 3?
+(GJ elimination)
+
+4. You are testing a new version of your website. You randomly partition your users into 2 groups. Group A continues to get the old version of the website. Group B gets the new version of the website. You would like to maximize the number of registrations. These are the results you get:
+
+Group	Viewers	Registrations
+A	612	103
+B	595	144
+Can we say with confidence that the new version of the website is better?
+Mean (A) = 103/612 = .16830065
+SD(A) = sqrt(.1683*(1-.1683)) = .374132
+Mean (B) = 144/595 = .24201681
+
+(Mean (B) - Mean(A))/STD(B) = .2420-.1583 / .3741 = .22373 = Z
+Pr(Z) < .5910, Cannot say with confidence
+
+5. You are trying to predict the MPG of a car given the horse power. A scatterplot of the data is as follows. What sort of model would you use to fit the data? How would you measure the success of your model?
+
+MPG vs horse power
+
+Linear regression, possibly altered with a log (to account for the spread).
+Success would be measured in minimizing MSE.
+
+
+6. You have a model that predicts the price of the house given the number of square feet, number of rooms, age and size of plot. You use a regression model to predict the price. You try varying the degree of the polynomial used to fit the data. This graph shows mean squared error on the training and testing sets based on the "complexity" of the model (degree of the polynomial).
+
+What is going on in this graph? What would be an optimal choice for the degree of the polynomial?
+
+As the model reaches degree 17, it becomes overfit, and the high variance in
+the model makes any new testing data significantly different.
+
+We would like to find the minimum distance between test and train, also accounting
+for minimizing MSE. I would choose a dimension of 4 to satisfy both arguments.
+However, if more complexity is desired, I would choose 9, which still has
+a low distance between train and test, but does not have a higher variance.
+
+
+
+7. You have three models which classify emails as spam or not spam. You have tested it on a dataset of size 1000, with 100 spam emails and 900 non-spam emails. The accuracy of your models on that dataset is as follows:
+
+Model A: 83%
+Model B: 88%
+Model C: 79%
+a. Define a model which would have higher accuracy than any of the three models.
+
+TP: 98, FP: 2, TN: 890 FN: 10 -> ACC = 98+890/1000 = 98.8%
+
+b. What additional information would you use to determine which model you should use?
+
+Depending on the goal of the spam filter, we would want to look at FP and FN.
+If there are a high number of FP, we would have mail we want going to the spam
+folder, which is an annoyance. If we have a high number of FN, we would have
+a higher number of spam-emails in our inbox. Since we don't want to accidentally
+click on offers from Nigerian Princes in our inbox, we will settle with a high
+FP for the sake of safety.
+
+8. You are given a dataset of patient wait times at a hospital. You would like to remove observations that are likely to be data entry errors. How would you go about looking for these records?
+
+Check for null values and NaNs, as we want numerical values. Do a boxplot
+and filter for a threshold of outliers.
+
+Take a look at the following roc plot that compares two models (Model Red and Model Black).
+
+a. Which model would you choose if you require a sensitivity of at least 0.7?
+
+Black curve - Has lower specificity at these points.
+
+b. Which model would you choose if you need the specificity to be at least 0.9?
+
+Red Curve - Has higher sensitivity at these points.
+
+c. You are a doctor who has built classifier(s) for cancer based on the results of blood tests. Which would you choose (red or black model) and what would you set the threshold in each of the following scenarios:
+
+You will administer chemotherapy to the patients classified as having cancer
+You schedule more tests (more expensive than the first test but less than chemotherapy) to better evaluate whether a patient has cancer
+
+Red Curve - We want to minimize false positive rate at this point.
+
+
+d. Give one examples of a case study that would require high sensitivity (recall) and one example of a case study that would prefer low false positive rate. Feel free to browse Kaggle's list  of common data science case studies if you need inspiration.
+
+Case Study with High Sensitivity - Fraud Detection
+Case Study with Low FPR - Discount Targeting
