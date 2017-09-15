@@ -1,0 +1,29 @@
+
+From personagraph.py:
+
+Train Crossval Accuracy: [ 0.88679245  0.87735849  0.86524823  0.85545024  0.83412322]
+Predicted Accuracy: 0.863794526012
+Test Accuracy: 0.872340425532
+
+1. Used TfidfVectorizer with stop_words='english'. Did not stem or lemmatize
+since there is a time constraint and nltk takes too long to load. TfidfVectorizer
+useful as it can vectorize the words quickly.
+
+Used RandomForestClassifier, (n_jobs=500, max_depth=8, n_estimators=1000)
+because Gradient Boost or NN would take too long, wanted best accuracy for the buck.
+Compared accuracies on training set via Python Notebook (again, for speed),
+went from initial 70% to 86% accuracy. 750 Jobs was overfit, went back to 500
+
+
+2. Fit-transformed X into TfidfVectorizer as X_vec,
+Did a train_test_split on x_vec and y.
+Fit on X_train, y_train
+cross_val_score on X_train, y_train
+Test on X_test, y_test
+
+Used K-Fold cross validation on the split since we only have a limited dataset
+(no test set) and we wanted to account for potential overfitting.
+
+3. Decided on RandomForestClassifier because in a production situation it
+is parallelizable, thus speed would be the issue, given a dataset of text
+of any size, not just the current size.
